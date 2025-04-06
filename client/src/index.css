@@ -1,0 +1,126 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Custom Styles */
+.container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.main-content {
+  min-height: calc(100vh - 160px);
+}
+
+.footer {
+  margin-top: 20px;
+  padding: 20px 0;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+}
+
+/* Problem card styles */
+.difficulty-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-left: 10px;
+}
+
+.difficulty-easy {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.difficulty-medium {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.difficulty-hard {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Problem tags */
+.problem-tag {
+  background-color: #e9ecef;
+  color: #212529;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  margin-right: 0.25rem;
+  font-size: 0.75rem;
+  display: inline-block;
+  margin-bottom: 0.25rem;
+}
+
+/* Problem description */
+.problem-section {
+  margin-bottom: 1.5rem;
+}
+
+.problem-section h5 {
+  margin-bottom: 0.5rem;
+}
+
+.test-case {
+  background-color: #f8f9fa;
+  border-radius: 0.25rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Status badges */
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.accepted {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.wrong-answer, .runtime-error, .compilation-error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.time-limit-exceeded {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.pending {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+/* Code editor styles */
+.editor-container {
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  height: 400px;
+}
+
+.editor-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ced4da;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
