@@ -4,7 +4,7 @@
 ## 📋 Overview
 
 CodeForge is a full-stack MERN (MongoDB, Express, React, Node.js) application that provides an online judge system for coding practice. 
-It allows users to browse coding problems, submit solutions in C/C++/Python, and receive immediate feedback on their submissions including execution time, 
+It allows users to browse coding problems, submit solutions in C/C++, and receive immediate feedback on their submissions including execution time, 
 memory usage, and test case results.
 
 ## ✨ Features
