@@ -1,5 +1,7 @@
 # CodeForge - Online Judge System
 
+<img width="1440" alt="Screenshot 1947-01-24 at 6 16 13 PM" src="https://github.com/user-attachments/assets/5bbaf855-13e4-49da-9e0a-47c3fc47ff5b" />
+
 
 ## 📋 Overview
 
