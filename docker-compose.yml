@@ -1,0 +1,116 @@
+name: codeforge 
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: codeforge-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: codeforge
+      POSTGRES_PASSWORD: codeforge
+      POSTGRES_DB: codeforge
+    ports: 
+      - "5433:5432"
+    volumes: 
+      - codeforge-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U codeforge -d codeforge"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - codeforge
+
+  redis:
+    image: redis:7-alpine
+    container_name: codeforge-redis
+    restart: unless-stopped
+    ports: 
+      - "6380:6379"
+    networks:
+      - codeforge
+
+  kafka:
+    image: apache/kafka:3.9.1
+    container_name: codeforge-kafka
+    restart: unless-stopped
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+    ports:
+      - "9094:9092"
+    networks:
+      - codeforge
+
+  judge-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.worker
+    container_name: codeforge-judge-worker
+    restart: unless-stopped
+    command: ["python", "worker.py"]
+    volumes:
+      - ./backend:/app
+    env_file:
+      - .env
+    depends_on:
+      - kafka
+      - postgres
+      - redis
+    networks:
+      - codeforge
+
+  judge-worker-2:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.worker
+    container_name: codeforge-judge-worker-2
+    restart: unless-stopped
+    command: ["python", "worker.py"]
+    volumes:
+      - ./backend:/app
+    env_file:
+      - .env
+    depends_on:
+      - kafka
+      - postgres
+      - redis
+    networks:
+      - codeforge
+
+  api:
+    build: ./backend
+    container_name: codeforge-api
+    restart: unless-stopped
+    command: ["sh", "/app/entrypoint.sh"]
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - codeforge
+
+networks:
+  codeforge:
+    name: codeforge_net
+    driver: bridge
+
+volumes: 
+  codeforge-pgdata:
+    name: codeforge_pgdata 
